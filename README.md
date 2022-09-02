@@ -1,1 +1,1 @@
-My first readme
+Some text for read me
