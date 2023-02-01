@@ -8,4 +8,4 @@
 
 
 
-ps auxf | grep bash
+ps -auxf | grep bash
