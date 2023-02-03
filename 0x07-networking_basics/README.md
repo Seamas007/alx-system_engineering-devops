@@ -3,6 +3,9 @@
 Resources
 Read or watch:
 
+Resources
+Read or watch:
+
 OSI model
 Different types of network
 LAN network
@@ -17,4 +20,3 @@ TCP and UDP
 TCP/UDP ports List
 What is ping /ICMP
 Positional parameters
-
