@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
-# Kills the 4-to_infinity_and_beyond process
+# Get the PID of the process that displays the message "To infinity and beyond"
+pid=$(ps aux | grep "To infinity and beyond" | awk '{print $2}')
 
-kill "$(pgrep -f 4-to_infinity_and_beyond)"
+# Check if the PID was found
+if [[ -n "$pid" ]]; then
+  # Stop the process using the PID
+  kill "$pid"
+  echo "Process with PID $pid has been stopped."
+else
+  # If the PID was not found, display an error message
+  echo "No process displaying the message 'To infinity and beyond' was found."
+fi
