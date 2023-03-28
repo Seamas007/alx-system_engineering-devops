@@ -1,7 +1,27 @@
 #!/usr/bin/env bash
-# Installs nginx server
+# Update packages and install nginx
 apt-get update
 apt-get -y install nginx
-ufw allow 'Nginx HTTP'
+
+# Configure nginx to listen on port 80
+echo "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html index.htm;
+    server_name _;
+    location / {
+        try_files \$uri \$uri/ =404;
+        fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+}" > /etc/nginx/sites-available/default
+
+# Restart nginx
+kill $(cat /var/run/nginx.pid)
+/usr/sbin/nginx
+
+# Create an HTML file containing the text "Hello World!"
 echo "Hello World!" > /var/www/html/index.html
-service nginx start
+
