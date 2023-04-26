@@ -1,99 +1,45 @@
 #!/usr/bin/python3
-"""
-Exports tasks owned by an employee to a JSON file
-"""
+'''
+A script to export data in the JSON format.
+'''
+
 import json
 import requests
-import sys
-
+from sys import argv
 
 if __name__ == '__main__':
-    # Check command-line arguments
-    if len(sys.argv) != 2:
-        print('Usage: {} EMPLOYEE_ID'.format(sys.argv[0]))
-        sys.exit(1)
+    uid = argv[1]
+    url = "https://jsonplaceholder.typicode.com/users/{}".format(uid)
+    user = requests.get(url, verify=False).json()
+    url = "https://jsonplaceholder.typicode.com/todos?userId={}".format(uid)
+    todo = requests.get(url, verify=False).json()
+    name = user.get('username')
+    t = [{"task": t.get("title"),
+          "username": name,
+          "completed": t.get("completed")} for t in todo]
+    bj = {}
+    bj[uid] = t
+    with open("{}.json".format(uid), 'w') as filejs:
+        json.dump(bj, filejs)#!/usr/bin/python3
+'''
+A script to export data in the JSON format.
+'''
 
-    # Set variables
-    api_url = 'https://jsonplaceholder.typicode.com'
-    employee_id = sys.argv[1]
-    employee_url = '{}/users/{}'.format(api_url, employee_id)
-    todos_url = '{}/todos?userId={}'.format(api_url, employee_id)
-
-    # Get employee info
-    employee_response = requests.get(employee_url)
-    employee_dict = employee_response.json()
-    employee_username = employee_dict['username']
-
-    # Get todos for employee
-    todos_response = requests.get(todos_url)
-    todos_list = todos_response.json()
-
-    # Create dictionary of tasks
-    tasks_dict = {}
-    for todo in todos_list:
-        task_title = todo['title']
-        task_completed = todo['completed']
-        task_dict = {
-            'task': task_title,
-            'completed': task_completed,
-            'username': employee_username
-        }
-        if task_completed:
-            status = 'completed'
-        else:
-            status = 'not completed'
-        tasks_dict.setdefault(status, []).append(task_dict)
-
-    # Write tasks to JSON file
-    json_filename = '{}.json'.format(employee_id)
-    with open(json_filename, mode='w', encoding='utf-8') as json_file:
-        json.dump(tasks_dict, json_file)#!/usr/bin/python3
-"""
-Exports tasks owned by an employee to a JSON file
-"""
 import json
 import requests
-import sys
-
+from sys import argv
 
 if __name__ == '__main__':
-    # Check command-line arguments
-    if len(sys.argv) != 2:
-        print('Usage: {} EMPLOYEE_ID'.format(sys.argv[0]))
-        sys.exit(1)
-
-    # Set variables
-    api_url = 'https://jsonplaceholder.typicode.com'
-    employee_id = sys.argv[1]
-    employee_url = '{}/users/{}'.format(api_url, employee_id)
-    todos_url = '{}/todos?userId={}'.format(api_url, employee_id)
-
-    # Get employee info
-    employee_response = requests.get(employee_url)
-    employee_dict = employee_response.json()
-    employee_username = employee_dict['username']
-
-    # Get todos for employee
-    todos_response = requests.get(todos_url)
-    todos_list = todos_response.json()
-
-    # Create dictionary of tasks
-    tasks_dict = {}
-    for todo in todos_list:
-        task_title = todo['title']
-        task_completed = todo['completed']
-        task_dict = {
-            'task': task_title,
-            'completed': task_completed,
-            'username': employee_username
-        }
-        if task_completed:
-            status = 'completed'
-        else:
-            status = 'not completed'
-        tasks_dict.setdefault(status, []).append(task_dict)
-
-    # Write tasks to JSON file
-    json_filename = '{}.json'.format(employee_id)
-    with open(json_filename, mode='w', encoding='utf-8') as json_file:
-        json.dump(tasks_dict, json_file)
+    uid = argv[1]
+    url = "https://jsonplaceholder.typicode.com/users/{}".format(uid)
+    user = requests.get(url, verify=False).json()
+    url = "https://jsonplaceholder.typicode.com/todos?userId={}".format(uid)
+    todo = requests.get(url, verify=False).json()
+    name = user.get('username')
+    t = [{"task": t.get("title"),
+          "username": name,
+          "completed": t.get("completed")} for t in todo]
+    bj = {}
+    bj[uid] = t
+    with open("{}.json".format(uid), 'w') as filejs:
+        json.dump(bj, filejs)
