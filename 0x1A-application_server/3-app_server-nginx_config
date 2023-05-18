@@ -51,15 +51,10 @@ server {
                  proxy_pass http://0.0.0.0:5001/number_odd_or_even/$1;
         }
 
-        location /api/ {
-                 include proxy_params;
-                 proxy_pass http://0.0.0.0:5002/api/;
-        }
-
         # Add index.php to the list if you are using PHP
         index index.html index.htm index.nginx-debian.html;
 
-        server_name 127.0.0.1 34.73.70.32;
+        server_name _;
         add_header X-Served-By $hostname;
         rewrite ^/redirect_me https:\/\/google.com permanent;
         error_page 404 /custom_404.html;
